@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.models.TransferModel;
 import br.com.banco.repositories.TransferRepository;
+import br.com.banco.services.TransfersServices;
 
 import java.util.*;
 
@@ -19,22 +20,11 @@ import org.springframework.http.ResponseEntity;
 public class TransferController {
     
     @Autowired
-    TransferRepository transferRepository;
+    TransfersServices transferServices;
 
     @GetMapping("/tranfers")
     public ResponseEntity<List<TransferModel>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(transferRepository.findAll());
-    }
-
-    @GetMapping("/transfers/{intial}&{finals}&{name}")
-    public ResponseEntity<List<TransferModel>> getWithFilter(
-        @PathParam(value = "initial") long initial,
-        @PathParam(value = "finals") long finals, 
-        @PathParam(value = "name") String name
-    ) {
-        List<TransferModel> transfers = applayFilters(initial, finals, name, transferRepository.findAll());
-
-        return ResponseEntity.status(HttpStatus.OK).body(transfers);
+        return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
     }
 
     @GetMapping("/transfers?{initial}&{finals}")
@@ -52,34 +42,13 @@ public class TransferController {
         return getWithFilter(0, 0, name);
     }
 
-    private static List<TransferModel> applayFilters(long initial, long finals, String name, List<TransferModel> t){
-        List<TransferModel> transfers = t;
-
-        if(initial > 0 && finals > 0){
-            List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
-
-            for(TransferModel item : transfers) {
-                if (item.getTransferDate().getTime() < initial || item.getTransferDate().getTime() > finals) {
-                    transfers.remove(item);
-                }
-            }
-
-            transfers.removeAll(itemForDelete);
-        }
-
-        if(!name.isEmpty()){
-            List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
-            
-            for(TransferModel item : transfers) {
-                if (item.getOperatorName() != name) {
-                    itemForDelete.add(item);
-                }
-            }
-
-            transfers.removeAll(itemForDelete);
-        }
-
-        return transfers;
+    @GetMapping("/transfers/{intial}&{finals}&{name}")
+    public ResponseEntity<List<TransferModel>> getWithFilter(
+        @PathParam(value = "initial") long initial,
+        @PathParam(value = "finals") long finals, 
+        @PathParam(value = "name") String name
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body(transferServices.findWithFilter(initial, finals, name));
     }
     
 }
