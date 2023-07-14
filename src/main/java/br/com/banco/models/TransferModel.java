@@ -24,9 +24,9 @@ public class TransferModel implements Serializable {
 
     private Date transferDate;
 
-    private double value;
+    private double tValue;
 
-    private String type;
+    private String tType;
 
     private String operatorName;
 
@@ -43,11 +43,11 @@ public class TransferModel implements Serializable {
     }
 
     public double getValue() {
-        return value;
+        return tValue;
     }
 
     public String getType() {
-        return type;
+        return tType;
     }
 
     public String getOperatorName() {
