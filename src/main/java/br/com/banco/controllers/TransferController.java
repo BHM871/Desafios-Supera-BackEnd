@@ -37,6 +37,21 @@ public class TransferController {
         return ResponseEntity.status(HttpStatus.OK).body(transfers);
     }
 
+    @GetMapping("/transfers?{initial}&{finals}")
+    public ResponseEntity<List<TransferModel>> getWithFilter(
+        @PathParam(value = "initial") long initial,
+        @PathParam(value = "finals") long finals
+    ) {
+        return getWithFilter(initial, finals, "");
+    }
+
+    @GetMapping("/transfers?{name}")
+    public ResponseEntity<List<TransferModel>> getWithFilter(
+        @PathParam(value = "name") String name
+    ) {
+        return getWithFilter(0, 0, name);
+    }
+
     private static List<TransferModel> applayFilters(long initial, long finals, String name, List<TransferModel> t){
         List<TransferModel> transfers = t;
 
