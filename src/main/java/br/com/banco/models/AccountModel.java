@@ -7,6 +7,11 @@ import java.util.List;
 
 import javax.persistence.*;
 
+/*
+Optei por retirar os métodos setters.
+Pois este projeto não como objetivo mudar nenhum valor, apenas ler
+*/
+
 @Entity
 @Table(name = "TB_ACCOUNT")
 public class AccountModel implements Serializable {
@@ -15,27 +20,19 @@ public class AccountModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idConta;
+    private UUID idAccount;
 
     private String nameResponsible;
 
     @OneToMany(mappedBy = "account")
     private List<TransferModel> transfer = new ArrayList<TransferModel>();
 
-    public UUID getIdConta() {
-        return idConta;
-    }
-
-    public void setIdConta(UUID idConta) {
-        this.idConta = idConta;
+    public UUID getIdAccount() {
+        return idAccount;
     }
 
     public String getNameResponsible() {
         return nameResponsible;
-    }
-    
-    public void setNameResponsible(String nameResponsible) {
-        this.nameResponsible = nameResponsible;
     }
 
     public List<TransferModel> getTransfer() {

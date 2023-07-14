@@ -7,6 +7,11 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.ForeignKey;
 
+/*
+Optei por retirar os métodos setters.
+Pois este projeto não como objetivo mudar nenhum valor, apenas ler
+*/
+
 @Entity
 @Table(name = "TB_TRANSFER")
 public class TransferModel implements Serializable {
@@ -33,48 +38,24 @@ public class TransferModel implements Serializable {
         return id;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
     public Date getTransferDate() {
         return transferDate;
-    }
-
-    public void setTransferDate(Date transferDate) {
-        this.transferDate = transferDate;
     }
 
     public double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
-        this.value = value;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getOperatorName() {
         return operatorName;
     }
 
-    public void setOperatorName(String operatorName) {
-        this.operatorName = operatorName;
-    }
-
     public AccountModel getAccount() {
         return account;
-    }
-
-    public void setAccount(AccountModel account) {
-        this.account = account;
     }
 
 }
