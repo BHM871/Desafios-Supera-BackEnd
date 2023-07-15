@@ -1,15 +1,14 @@
 package br.com.banco.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.models.TransferModel;
-import br.com.banco.repositories.TransferRepository;
 import br.com.banco.services.TransfersServices;
 
 import java.util.*;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,32 +21,19 @@ public class TransferController {
     @Autowired
     TransfersServices transferServices;
 
-    @GetMapping("/tranfers")
+    @GetMapping("/")
     public ResponseEntity<List<TransferModel>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
     }
 
-    @GetMapping("/transfers?{initial}&{finals}")
+    @GetMapping("/filters")
     public ResponseEntity<List<TransferModel>> getWithFilter(
-        @PathParam(value = "initial") long initial,
-        @PathParam(value = "finals") long finals
+        @RequestParam(value = "initial", required = false, defaultValue = "0") String i,
+        @RequestParam(value = "final", required = false, defaultValue = "0") String f, 
+        @RequestParam(value = "name", required = false, defaultValue = "") String name
     ) {
-        return getWithFilter(initial, finals, "");
-    }
-
-    @GetMapping("/transfers?{name}")
-    public ResponseEntity<List<TransferModel>> getWithFilter(
-        @PathParam(value = "name") String name
-    ) {
-        return getWithFilter(0, 0, name);
-    }
-
-    @GetMapping("/transfers/{intial}&{finals}&{name}")
-    public ResponseEntity<List<TransferModel>> getWithFilter(
-        @PathParam(value = "initial") long initial,
-        @PathParam(value = "finals") long finals, 
-        @PathParam(value = "name") String name
-    ) {
+        long initial = Long.valueOf(i);
+        long finals = Long.valueOf(f);
         return ResponseEntity.status(HttpStatus.OK).body(transferServices.findWithFilter(initial, finals, name));
     }
     

@@ -20,7 +20,7 @@ public class TransferModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private Integer id;
 
     private Date transferDate;
 
@@ -30,11 +30,10 @@ public class TransferModel implements Serializable {
 
     private String operatorName;
 
-    @ForeignKey(name = "account_id")
-    @ManyToOne    
-    private AccountModel account;
+    @ForeignKey(name = "account_id")    
+    private Integer account_id;
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
@@ -54,8 +53,8 @@ public class TransferModel implements Serializable {
         return operatorName;
     }
 
-    public AccountModel getAccount() {
-        return account;
+    public int getAccount() {
+        return account_id;
     }
 
 }

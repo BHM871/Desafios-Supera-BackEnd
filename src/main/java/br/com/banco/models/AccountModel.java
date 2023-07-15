@@ -20,26 +20,16 @@ public class AccountModel implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID idAccount;
+    private Integer idAccount;
 
     private String nameResponsible;
 
-    @OneToMany(mappedBy = "account")
-    private List<TransferModel> transfer = new ArrayList<TransferModel>();
 
-    public UUID getIdAccount() {
+    public int getIdAccount() {
         return idAccount;
     }
 
     public String getNameResponsible() {
         return nameResponsible;
-    }
-
-    public List<TransferModel> getTransfer() {
-        return transfer;
-    }
-
-    public void setTransfer(List<TransferModel> transfer) {
-        this.transfer = transfer;
     }
 }
