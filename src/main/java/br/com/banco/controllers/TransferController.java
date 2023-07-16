@@ -1,5 +1,6 @@
 package br.com.banco.controllers;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,12 +22,14 @@ public class TransferController {
     TransfersServices transferServices;
 
     //Método para buscar todas as transferências
+    @CrossOrigin
     @GetMapping("/")
     public ResponseEntity<List<TransferModel>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
     }
 
     //Método para filtrar a busca pelas transferências
+    @CrossOrigin
     @GetMapping("/filters")
     public ResponseEntity<List<TransferModel>> getWithFilter(
         @RequestParam(value = "initial", required = false, defaultValue = "0") String i,
@@ -35,7 +38,7 @@ public class TransferController {
     ) {
         long initial = Long.valueOf(i);
         long finals = Long.valueOf(f);
-        return ResponseEntity.status(HttpStatus.OK).body(transferServices.findWithFilter(initial, finals, name));
+        return ResponseEntity.status(HttpStatus.OK).header("TransferHeader").body(transferServices.findWithFilter(initial, finals, name));
     }
     
 }
