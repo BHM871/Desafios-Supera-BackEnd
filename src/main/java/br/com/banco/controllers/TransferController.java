@@ -1,7 +1,6 @@
 package br.com.banco.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,11 +20,13 @@ public class TransferController {
     @Autowired
     TransfersServices transferServices;
 
+    //Método para buscar todas as transferências
     @GetMapping("/")
     public ResponseEntity<List<TransferModel>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
     }
 
+    //Método para filtrar a busca pelas transferências
     @GetMapping("/filters")
     public ResponseEntity<List<TransferModel>> getWithFilter(
         @RequestParam(value = "initial", required = false, defaultValue = "0") String i,

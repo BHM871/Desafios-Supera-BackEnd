@@ -1,13 +1,30 @@
 package br.com.banco.models;
 
 import java.io.Serializable;
-import java.util.UUID;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.*;
 
 /*
+Para a crição do model segui e acordo com o arquivo de database disponibilizado.
+
+Eu não relacionei as tabelas pois, quando era feito a API retornava uma cascata infinita.
+
+conta{
+    [
+        transferencia{
+            conta{
+                [
+                    transferencia{
+                        conta...
+                    }
+                ]
+            }
+        }
+    ]
+}
+
+Desta forma optei por salvar apenas uma referencia na TB_TRANSFER para esta
+
 Optei por retirar os métodos setters.
 Pois este projeto não como objetivo mudar nenhum valor, apenas ler
 */

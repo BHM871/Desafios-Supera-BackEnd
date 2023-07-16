@@ -8,6 +8,26 @@ import javax.persistence.*;
 import org.hibernate.annotations.ForeignKey;
 
 /*
+Para a crição do model segui e acordo com o arquivo de database disponibilizado.
+
+Eu não relacionei as tabelas pois, quando era feito a API retornava uma cascata infinita.
+
+transferencia{
+    conta{
+        [
+            transferencia{
+                conta{
+                    [
+                        transferencia...
+                    ]
+                }
+            }
+        ]
+    }
+}
+
+Desta forma optei por salvar apenas uma referencia para a tabela de conta
+
 Optei por retirar os métodos setters.
 Pois este projeto não como objetivo mudar nenhum valor, apenas ler
 */

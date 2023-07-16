@@ -15,11 +15,13 @@ public class TransfersServices {
     @Autowired
     TransferRepository transferRepository;
 
+    //Busca todas as tranferências
     public List<TransferModel> findAll(){
         List<TransferModel> a = transferRepository.findAll();
         return a;
     }
 
+    //Busca todas as tranferências, aplica os filtros, por fim retorna a lista filtrada
     public List<TransferModel> findWithFilter(long initial, long finals,  String name){
         List<TransferModel> transfers = transferRepository.findAll();
 
@@ -29,6 +31,7 @@ public class TransfersServices {
         return transfers;
     }
 
+    //Aplica o filtro de INTERVALO na lista de transferências e retorna a lista filtrada
     private List<TransferModel> applayFiltersInverval(long initial, long finals, List<TransferModel> t){
 
         List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
@@ -57,6 +60,7 @@ public class TransfersServices {
 
     }
 
+    //Aplica o filtro de NOME na lista de transferências e retorna a lista filtrada
     private List<TransferModel> applayFiltersName(String name, List<TransferModel> t){
 
         List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
