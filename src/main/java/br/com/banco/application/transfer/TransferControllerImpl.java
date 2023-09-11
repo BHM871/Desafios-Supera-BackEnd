@@ -1,36 +1,31 @@
-package br.com.banco.controllers;
+package br.com.banco.application.transfer;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import br.com.banco.models.TransferModel;
-import br.com.banco.services.TransfersServices;
-
-import java.util.*;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.banco.core.domain.TransferModel;
+import br.com.banco.presenter.TransferController;
+import br.com.banco.presenter.TransferServices;
 
-@RestController
-public class TransferController {
+@Component
+public class TransferControllerImpl implements TransferController {
     
     @Autowired
-    TransfersServices transferServices;
+    TransferServices transferServices;
 
     //Método para buscar todas as transferências
-    @CrossOrigin
-    @GetMapping("/")
+    @Override
     public ResponseEntity<List<TransferModel>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
     }
 
     //Método para filtrar a busca pelas transferências
-    @CrossOrigin
-    @GetMapping("/filters")
+    @Override
     public ResponseEntity<List<TransferModel>> getWithFilter(
         @RequestParam(value = "initial", required = false, defaultValue = "0") String i,
         @RequestParam(value = "final", required = false, defaultValue = "0") String f, 

@@ -1,4 +1,4 @@
-package br.com.banco.models;
+package br.com.banco.core.domain;
 
 import java.io.Serializable;
 import java.util.*;

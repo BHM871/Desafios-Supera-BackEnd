@@ -1,14 +1,30 @@
-package br.com.banco.repositories;
+package br.com.banco.application.transfer;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import br.com.banco.models.TransferModel;
+import br.com.banco.core.domain.TransferModel;
+import br.com.banco.core.usecases.transfers.TransferRepository;
+import br.com.banco.infra.jpa.JpaTransferRepository;
 
 @Repository
-public abstract class TransferRepositoryImpl implements TransferRepository<TransferModel, Integer>  {
+public class TransferRepositoryImpl implements TransferRepository  {
+
+    @Autowired
+    private JpaTransferRepository repository;
+
+    @Override
+    public List<TransferModel> findAll() {
+        return repository.findAll();
+    }
+
+    @Override
+    public List<TransferModel> findByOperatorName(String operatorName) {
+        return repository.findByOperatorName(operatorName);
+    }
     
     @Override
     public List<TransferModel> findInInterval(long initial, long finals){
