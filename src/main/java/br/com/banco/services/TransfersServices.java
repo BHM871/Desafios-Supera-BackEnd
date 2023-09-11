@@ -17,16 +17,18 @@ public class TransfersServices {
 
     //Busca todas as tranferências
     public List<TransferModel> findAll(){
-        List<TransferModel> a = transferRepository.findAll();
-        return a;
+        return transferRepository.findAll();
     }
 
     //Busca todas as tranferências, aplica os filtros, por fim retorna a lista filtrada
     public List<TransferModel> findWithFilter(long initial, long finals,  String name){
-        List<TransferModel> transfers = transferRepository.findAll();
+        List<TransferModel> transfers;
+
+        transfers = name.isEmpty() ? 
+            transferRepository.findAll() : 
+            transferRepository.findByOperatorName(name);
 
         transfers = applayFiltersInverval(initial, finals, transfers);
-        transfers = applayFiltersName(name, transfers);
 
         return transfers;
     }
@@ -58,22 +60,6 @@ public class TransfersServices {
 
         return t;
 
-    }
-
-    //Aplica o filtro de NOME na lista de transferências e retorna a lista filtrada
-    private List<TransferModel> applayFiltersName(String name, List<TransferModel> t){
-
-        List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
-        if(!name.isEmpty()){
-            for(TransferModel item : t) {
-                if(item.getOperatorName() == null || (item.getOperatorName() != null && !item.getOperatorName().equals(name))){
-                    itemForDelete.add(item);
-                } 
-            }
-        }
-        t.removeAll(itemForDelete);
-
-        return t;
     }
 
 }
