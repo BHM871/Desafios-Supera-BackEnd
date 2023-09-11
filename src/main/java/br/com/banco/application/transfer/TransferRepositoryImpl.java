@@ -1,5 +1,7 @@
 package br.com.banco.application.transfer;
 
+import java.time.temporal.ChronoField;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,11 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
     @Autowired
     private JpaTransferRepository repository;
+
+    @Override
+    public TransferModel create(TransferModel transfer){
+        return repository.save(transfer);
+    }
 
     @Override
     public List<TransferModel> findAll() {
@@ -52,19 +59,19 @@ public class TransferRepositoryImpl implements TransferRepository  {
         
         if(initial > 0 && finals > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() < initial || item.getTransferDate().getTime() > finals) {
+                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) < initial || item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) > finals) {
                     itemForDelete.add(item);
                 }
             }
         } else if(initial > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() < initial) {
+                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) < initial) {
                     itemForDelete.add(item);
                 }
             }
         } else if(finals > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() > finals) {
+                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) > finals) {
                     itemForDelete.add(item);
                 }
             }

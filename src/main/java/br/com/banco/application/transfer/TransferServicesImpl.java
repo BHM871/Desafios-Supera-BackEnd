@@ -6,19 +6,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.banco.core.domain.TransferModel;
-import br.com.banco.core.usecases.transfers.TransferRepository;
+import br.com.banco.core.domain.dto.TransferDTO;
+import br.com.banco.core.usecases.transfers.TransferUseCase;
 import br.com.banco.presenter.TransferServices;
 
 @Service
 public class TransferServicesImpl implements TransferServices {
     
     @Autowired
-    TransferRepository transferRepository;
+    TransferUseCase transferUCase;
+
+    //Cria uma transferencia
+    @Override
+    public TransferModel create(TransferDTO transfer){
+        return transferUCase.create(transfer);
+    }
 
     //Busca todas as tranferências
     @Override
     public List<TransferModel> findAll(){
-        return transferRepository.findAll();
+        return transferUCase.getAll();
     }
 
     //Busca as tranferências baseados nos filtros disponíveis, por fim retorna a lista filtrada
@@ -27,11 +34,11 @@ public class TransferServicesImpl implements TransferServices {
         List<TransferModel> transfers;
 
         if(!name.isEmpty() && (initial > 0 || finals > 0)){
-            transfers = transferRepository.findByOperatorNameAndInterval(name, initial, finals);
+            transfers = transferUCase.getByOperatorNameAndInterval(name, initial, finals);
         } else if (!name.isEmpty()){
-            transfers = transferRepository.findByOperatorName(name);
+            transfers = transferUCase.getByOperatorName(name);
         } else {
-            transfers = transferRepository.findInInterval(initial, finals);
+            transfers = transferUCase.getByInterval(initial, finals);
         }
 
         return transfers;

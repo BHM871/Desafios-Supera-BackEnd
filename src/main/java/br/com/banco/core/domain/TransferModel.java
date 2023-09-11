@@ -1,7 +1,8 @@
 package br.com.banco.core.domain;
 
 import java.io.Serializable;
-import java.util.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
@@ -42,11 +43,12 @@ public class TransferModel implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    private Date transferDate;
+    private LocalDateTime transferDate;
 
-    private double tValue;
+    private BigDecimal tValue;
 
-    private String tType;
+    @Enumerated(EnumType.STRING)
+    private TransferType tType;
 
     private String operatorName;
 
@@ -57,15 +59,15 @@ public class TransferModel implements Serializable {
         return id;
     }
 
-    public Date getTransferDate() {
+    public LocalDateTime getTransferDate() {
         return transferDate;
     }
 
-    public double getValue() {
+    public BigDecimal getValue() {
         return tValue;
     }
 
-    public String getType() {
+    public TransferType getType() {
         return tType;
     }
 
@@ -75,6 +77,26 @@ public class TransferModel implements Serializable {
 
     public int getAccount() {
         return account_id;
+    }
+
+    public void setTransferDate(LocalDateTime transferDate) {
+        this.transferDate = transferDate;
+    }
+
+    public void setValue(BigDecimal tValue) {
+        this.tValue = tValue;
+    }
+
+    public void setType(TransferType tType){
+        this.tType = tType;
+    }
+
+    public void setOperatorName(String operatorName){
+        this.operatorName = operatorName;
+    }
+
+    public void setAccount_id(Integer account_id) {
+        this.account_id = account_id;
     }
 
 }

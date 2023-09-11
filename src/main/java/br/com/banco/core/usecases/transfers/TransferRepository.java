@@ -6,6 +6,8 @@ import br.com.banco.core.domain.TransferModel;
 
 public interface TransferRepository {
 
+    public TransferModel create(TransferModel transfer);
+
     public List<TransferModel> findAll();
 
     public List<TransferModel> findByOperatorName(String operatorName);
