@@ -1,6 +1,5 @@
 package br.com.banco.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,46 +19,19 @@ public class TransfersServices {
         return transferRepository.findAll();
     }
 
-    //Busca todas as tranferências, aplica os filtros, por fim retorna a lista filtrada
+    //Busca as tranferências baseados nos filtros disponíveis, por fim retorna a lista filtrada
     public List<TransferModel> findWithFilter(long initial, long finals,  String name){
         List<TransferModel> transfers;
 
-        transfers = name.isEmpty() ? 
-            transferRepository.findAll() : 
-            transferRepository.findByOperatorName(name);
-
-        transfers = applayFiltersInverval(initial, finals, transfers);
+        if(!name.isEmpty() && (initial > 0 || finals > 0)){
+            transfers = transferRepository.findByOperatorNameAndInterval(name, initial, finals);
+        } else if (!name.isEmpty()){
+            transfers = transferRepository.findByOperatorName(name);
+        } else {
+            transfers = transferRepository.findInInterval(initial, finals);
+        }
 
         return transfers;
-    }
-
-    //Aplica o filtro de INTERVALO na lista de transferências e retorna a lista filtrada
-    private List<TransferModel> applayFiltersInverval(long initial, long finals, List<TransferModel> t){
-
-        List<TransferModel> itemForDelete = new ArrayList<TransferModel>();
-        if(initial > 0 && finals > 0){
-            for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() < initial || item.getTransferDate().getTime() > finals) {
-                    itemForDelete.add(item);
-                }
-            }
-        } else if(initial > 0){
-            for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() < initial) {
-                    itemForDelete.add(item);
-                }
-            }
-        } else if(finals > 0){
-            for(TransferModel item : t) {
-                if (item.getTransferDate().getTime() > finals) {
-                    itemForDelete.add(item);
-                }
-            }
-        }
-        t.removeAll(itemForDelete);
-
-        return t;
-
     }
 
 }

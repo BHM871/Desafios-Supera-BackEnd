@@ -1,15 +1,14 @@
 package br.com.banco.repositories;
 
 import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
-import br.com.banco.models.TransferModel;
+public interface TransferRepository<T, ID> extends JpaRepository<T, ID> {
 
-@Repository
-public interface TransferRepository extends JpaRepository<TransferModel, Integer>  {
+    public List<T> findByOperatorName(String operatorName);
     
-    List<TransferModel> findByOperatorName(String operatorName);
+    public List<T> findInInterval(long initial, long finals);
 
+    public List<T> findByOperatorNameAndInterval(String operatorName, long initial, long finals);
+    
 }
