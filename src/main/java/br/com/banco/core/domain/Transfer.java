@@ -6,6 +6,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
+import br.com.banco.core.domain.dtos.TransferDTO;
+
 /*
 Para a crição do model segui e acordo com o arquivo de database disponibilizado.
 
@@ -68,9 +70,13 @@ public class Transfer implements Serializable {
         this.tValue = tValue;
         this.tType = tType;
         this.operatorName = operatorName;
-        this.account
- = account
-;
+        this.account = account;
+    }
+
+    public Transfer(TransferDTO data) {
+        this.tValue = data.gettValue();
+        this.tType = data.gettType();
+        this.operatorName = data.getOperatorName();
     }
 
     public Transfer() {
@@ -79,8 +85,7 @@ public class Transfer implements Serializable {
         this.tValue = null;
         this.tType = null;
         this.operatorName = null;
-        this.account
- = null;
+        this.account = null;
     }
 
     public Long getId() {

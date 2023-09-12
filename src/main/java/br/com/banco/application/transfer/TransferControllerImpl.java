@@ -21,15 +21,14 @@ import br.com.banco.presenter.transfer.TransferServices;
 public class TransferControllerImpl implements TransferController {
     
     @Autowired
-    TransferServices transferServices;
+    TransferServices services;
 
     //Criar novas transferencias
     @Override
     @CrossOrigin
     @PostMapping("/create")
     public ResponseEntity<Transfer> createTransfer(@RequestBody TransferDTO transfer)  throws Exception {
-        Transfer a = transferServices.create(transfer);
-        return ResponseEntity.status(HttpStatus.CREATED).body(a);
+        return ResponseEntity.status(HttpStatus.CREATED).body(services.create(transfer));
     }
 
     //Método para buscar todas as transferências
@@ -37,7 +36,7 @@ public class TransferControllerImpl implements TransferController {
     @CrossOrigin
     @GetMapping("/") 
     public ResponseEntity<List<Transfer>> getAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(transferServices.findAll());
+        return ResponseEntity.status(HttpStatus.OK).body(services.findAll());
     }
 
     //Método para filtrar a busca pelas transferências
@@ -45,8 +44,7 @@ public class TransferControllerImpl implements TransferController {
     @CrossOrigin
     @GetMapping("/filters")
     public ResponseEntity<List<Transfer>> getWithFilter(@RequestBody SearchDTO search) throws Exception {
-        List<Transfer> a = transferServices.findWithFilter(search);
-        return ResponseEntity.status(HttpStatus.OK).body(a);
+        return ResponseEntity.status(HttpStatus.OK).body(services.findWithFilter(search));
     }
     
 }

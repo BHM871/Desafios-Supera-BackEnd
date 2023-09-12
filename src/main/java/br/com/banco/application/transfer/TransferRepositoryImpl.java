@@ -12,33 +12,31 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
+import br.com.banco.presenter.account.AccountServices;
 
 @Repository
 public class TransferRepositoryImpl implements TransferRepository  {
 
     @Autowired
-    private JpaTransferRepository repository;
+    JpaTransferRepository repository;
+    AccountServices accountServices;
+
+    @Override
+    public void save(Transfer data){
+        this.repository.save(data);
+    }
 
     @Override
     public Transfer createUser(TransferDTO transfer) throws Exception {
 
         validateTransfer(transfer);
 
-        Transfer newTransfer = new Transfer();
-
+        Transfer newTransfer = new Transfer(transfer);
         newTransfer.setTransferDate(LocalDateTime.now());
-        newTransfer.setValue(transfer.gettValue());
-        newTransfer.setType(transfer.gettType());
-        newTransfer.setOperatorName(transfer.getOperatorName());
-        //newTransfer.setAccount(transfer.getAccount());
+        newTransfer.setAccount(accountServices.getById(transfer.getAccountId()));
 
         save(newTransfer);
         return newTransfer;
-    }
-
-    @Override
-    public void save(Transfer data){
-        this.repository.save(data);
     }
 
     @Override
@@ -68,16 +66,16 @@ public class TransferRepositoryImpl implements TransferRepository  {
         return transfers;
     }
 
-    private void validateTransfer(TransferDTO t)  {
-        String message = "Não foi possivel fazer a trnaferência, algum valor está incorreto";
+    private void validateTransfer(TransferDTO t) throws Exception {
+        String message = "Não foi possivel fazer a transferência, algum valor está incorreto";
 
-        if(t.gettValue() == null) throw new ExceptionInInitializerError(message);
+        if(t.gettValue() == null) throw new Exception(message);
 
-        if(t.gettType() == null) throw new ExceptionInInitializerError(message);
+        if(t.gettType() == null) throw new Exception(message);
 
-        if(t.getOperatorName() == null || t.getOperatorName().isEmpty()) throw new ExceptionInInitializerError(message);
+        if(t.getOperatorName() == null || t.getOperatorName().isEmpty()) throw new Exception(message);
 
-        if(t.getAccountId() == null || t.getAccountId() == 0) throw new ExceptionInInitializerError(message);
+        if(t.getAccountId() == null || t.getAccountId() == 0) throw new Exception(message);
 
     }
 

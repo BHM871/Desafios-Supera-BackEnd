@@ -9,7 +9,7 @@ import br.com.banco.core.domain.dtos.AccountDTO;
 
 public interface AccountRepository {
     
-    public void save();
+    public void save(Account data);
 
     public Account createAccount(AccountDTO account) throws Exception;
 

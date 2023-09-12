@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import br.com.banco.core.domain.dtos.AccountDTO;
+
 /*
 Para a crição do model segui e acordo com o arquivo de database disponibilizado.
 
@@ -50,6 +52,11 @@ public class Account implements Serializable {
         this.id = id;
         this.nameResponsible = nameResponsible;
         this.transfers = transfers;
+    }
+
+    public Account(AccountDTO data) {
+        this.nameResponsible = data.getNameResponsible();
+        this.transfers = new ArrayList<Transfer>();
     }
 
     public Account() {
