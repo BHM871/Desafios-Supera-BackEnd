@@ -7,9 +7,9 @@ import br.com.banco.core.domain.dtos.TransferDTO;
 
 public interface TransferRepository {
 
-    public Transfer createUser(TransferDTO transfer) throws Exception;
-
     public void save(Transfer transfer);
+
+    public Transfer createUser(TransferDTO transfer) throws Exception;
 
     public List<Transfer> findAll();
 
