@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.banco.commun.LocalDateTimeToLong;
-import br.com.banco.core.domain.TransferModel;
+import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.SearchDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
-import br.com.banco.presenter.TransferServices;
+import br.com.banco.presenter.transfer.TransferServices;
 
 @Service
 public class TransferServicesImpl implements TransferServices {
@@ -20,33 +20,37 @@ public class TransferServicesImpl implements TransferServices {
 
     //Cria uma transferencia
     @Override
-    public TransferModel create(TransferDTO transfer){
+    public Transfer create(TransferDTO transfer) throws Exception {
         return transferUCase.create(transfer);
     }
 
     //Busca todas as tranferências
     @Override
-    public List<TransferModel> findAll(){
+    public List<Transfer> findAll(){
         return transferUCase.getAll();
     }
 
     //Busca as tranferências baseados nos filtros disponíveis, por fim retorna a lista filtrada
     @Override
-    public List<TransferModel> findWithFilter(SearchDTO search){
-        List<TransferModel> transfers;
+    public List<Transfer> findWithFilter(SearchDTO search) throws Exception {
         String name = search.getName();
         long initial = LocalDateTimeToLong.of(search.getInitial());
         long finals = LocalDateTimeToLong.of(search.getFinals());
 
         if(!name.isEmpty() && (initial > 0 || finals > 0)){
-            transfers = transferUCase.getByOperatorNameAndInterval(name, initial, finals);
-        } else if (!name.isEmpty()){
-            transfers = transferUCase.getByOperatorName(name);
-        } else {
-            transfers = transferUCase.getByInterval(initial, finals);
+            return transferUCase.getByOperatorNameAndInterval(name, initial, finals);
+        }
+        
+        if (!name.isEmpty()){
+            return transferUCase.getByOperatorName(name);
+        } 
+        
+        if(initial > 0 || finals > 0) {
+            return transferUCase.getByInterval(initial, finals);
         }
 
-        return transfers;
+        throw new Exception("Filtros inválidos");
+
     }
 
 }

@@ -19,8 +19,9 @@ CREATE TABLE transferencia
         REFERENCES conta(id_conta)
 );
 
-INSERT INTO tb_account (id_account, name_responsible) VALUES (1,'Fulano');
-INSERT INTO tb_account (id_account, name_responsible) VALUES (2,'Sicrano');
+INSERT INTO tb_account (id, name_responsible) VALUES (1,'Fulano');
+INSERT INTO tb_account (id, name_responsible) VALUES (2,'Sicrano');
+INSERT INTO tb_account (id, name_responsible) VALUES (3,'Ronnyscley');
 
 INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (1,'2019-01-01 12:00:00+03',30895.46,'DEPOSITO', null, 1);
 INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (2,'2019-02-03 09:53:27+03',12.24,'DEPOSITO', null,2);
@@ -28,3 +29,9 @@ INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, acco
 INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (4,'2019-08-07 08:12:45+03',-530.50,'SAQUE', null,2);
 INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (5,'2020-06-08 10:15:01+03',3241.23,'TRANSFERENCIA', 'Beltrano',1);
 INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (6,'2021-04-01 12:12:04+03',25173.09,'TRANSFERENCIA', 'Ronnyscley',2);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (7,'2022-04-30 12:00:00+03',30895.46,'DEPOSITO', null, 1);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (8,'2020-11-03 09:53:27+03',12.24,'DEPOSITO', null,2);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (9,'2019-05-04 08:12:45+03',-500.50,'SAQUE', null,1);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (10,'2019-08-07 08:12:45+03',-530.50,'SAQUE', null,2);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (11,'2020-09-08 10:15:01+03',3241.23,'TRANSFERENCIA', 'Beltrano',1);
+INSERT INTO tb_transfer (id, transfer_date, t_value, t_type, operator_name, account_id) VALUES (12,'2020-04-01 12:12:04+03',25173.09,'TRANSFERENCIA', 'Ronnyscley',2);

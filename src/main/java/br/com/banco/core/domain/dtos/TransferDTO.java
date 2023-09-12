@@ -3,40 +3,42 @@ package br.com.banco.core.domain.dtos;
 
 import java.math.BigDecimal;
 
+import br.com.banco.core.domain.TransferType;
+
 public class TransferDTO {
 
     private final BigDecimal tValue;
 
-    private final String tType;
+    private final TransferType tType;
 
     private final String operatorName;
 
-    private Integer account_id;
+    private Integer accountId;
 
     public TransferDTO(
         BigDecimal tValue,
-        String tType,
+        TransferType tType,
         String operatorName,
-        Integer account_id
+        Integer accountId
     ){
         this.tValue = tValue;
         this.tType = tType;
         this.operatorName = operatorName;
-        this.account_id = account_id;
+        this.accountId = accountId;
     }
 
     public TransferDTO(){
         this.tValue = null;
-        this.tType = "";
-        this.operatorName = "";
-        this.account_id = -1;
+        this.tType = null;
+        this.operatorName = null;
+        this.accountId = null;
     }
 
     public BigDecimal gettValue() {
         return tValue;
     }
 
-    public String gettType() {
+    public TransferType gettType() {
         return tType;
     }
 
@@ -44,8 +46,8 @@ public class TransferDTO {
         return operatorName;
     }
 
-    public Integer getAccount_id() {
-        return account_id;
+    public Integer getAccountId() {
+        return accountId;
     }
     
 }

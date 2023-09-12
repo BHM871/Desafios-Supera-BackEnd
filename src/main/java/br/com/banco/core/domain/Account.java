@@ -1,6 +1,8 @@
 package br.com.banco.core.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -31,32 +33,45 @@ Pois este projeto não como objetivo mudar nenhum valor, apenas ler
 
 @Entity
 @Table(name = "TB_ACCOUNT")
-public class AccountModel implements Serializable {
+public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer idAccount;
+    private Integer id;
 
     private String nameResponsible;
 
-    public AccountModel(Integer idAccount, String nameResponsible) {
-        this.idAccount = idAccount;
+    @OneToMany()
+    private List<Transfer> transfers = new ArrayList<Transfer>();
+
+    public Account(Integer id, String nameResponsible, List<Transfer> transfers) {
+        this.id = id;
         this.nameResponsible = nameResponsible;
+        this.transfers = transfers;
     }
 
-    public AccountModel() {
-        this.idAccount = null;
+    public Account() {
+        this.id = null;
         this.nameResponsible = null;
+        this.transfers = new ArrayList<Transfer>();
     }
 
-    public int getIdAccount() {
-        return idAccount;
+    public int getId() {
+        return id;
     }
 
     public String getNameResponsible() {
         return nameResponsible;
+    }
+
+    public List<Transfer> getTransfers() {
+        return transfers;
+    }
+
+    public void setTransfers(List<Transfer> transfers) {
+        this.transfers = transfers;
     }
     
 }
