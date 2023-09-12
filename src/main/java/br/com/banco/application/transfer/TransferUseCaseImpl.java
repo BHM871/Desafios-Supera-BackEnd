@@ -1,14 +1,13 @@
 package br.com.banco.application.transfer;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.banco.core.domain.TransferModel;
-import br.com.banco.core.domain.dto.TransferDTO;
+import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 

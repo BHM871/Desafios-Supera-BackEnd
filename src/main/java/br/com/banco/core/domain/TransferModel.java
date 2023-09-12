@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 
 import javax.persistence.*;
 
-import org.hibernate.annotations.ForeignKey;
-
 /*
 Para a crição do model segui e acordo com o arquivo de database disponibilizado.
 
@@ -52,7 +50,32 @@ public class TransferModel implements Serializable {
 
     private String operatorName;
 
-    @ForeignKey(name = "account_id")    
+    public TransferModel(
+            Integer id, 
+            LocalDateTime transferDate, 
+            BigDecimal tValue, 
+            TransferType tType,
+            String operatorName, 
+            Integer account_id
+    ) {
+        this.id = id;
+        this.transferDate = transferDate;
+        this.tValue = tValue;
+        this.tType = tType;
+        this.operatorName = operatorName;
+        this.account_id = account_id;
+    }
+
+    public TransferModel() {
+        this.id = null;
+        this.transferDate = null;
+        this.tValue = null;
+        this.tType = null;
+        this.operatorName = null;
+        this.account_id = null;
+    }
+
+    @JoinColumn(foreignKey =  @ForeignKey())  
     private Integer account_id;
 
     public int getId() {

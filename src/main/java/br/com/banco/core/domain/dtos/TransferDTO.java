@@ -1,7 +1,7 @@
-package br.com.banco.core.domain.dto;
+
+package br.com.banco.core.domain.dtos;
 
 import java.math.BigDecimal;
-import java.util.Date;
 
 public class TransferDTO {
 

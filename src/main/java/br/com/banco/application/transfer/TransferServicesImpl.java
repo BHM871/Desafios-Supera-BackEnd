@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.banco.core.domain.TransferModel;
-import br.com.banco.core.domain.dto.TransferDTO;
+import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 import br.com.banco.presenter.TransferServices;
 

@@ -41,6 +41,15 @@ public class AccountModel implements Serializable {
 
     private String nameResponsible;
 
+    public AccountModel(Integer idAccount, String nameResponsible) {
+        this.idAccount = idAccount;
+        this.nameResponsible = nameResponsible;
+    }
+
+    public AccountModel() {
+        this.idAccount = null;
+        this.nameResponsible = null;
+    }
 
     public int getIdAccount() {
         return idAccount;
@@ -49,4 +58,5 @@ public class AccountModel implements Serializable {
     public String getNameResponsible() {
         return nameResponsible;
     }
+    
 }

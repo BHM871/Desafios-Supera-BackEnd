@@ -3,7 +3,7 @@ package br.com.banco.core.usecases.transfers;
 import java.util.List;
 
 import br.com.banco.core.domain.TransferModel;
-import br.com.banco.core.domain.dto.TransferDTO;
+import br.com.banco.core.domain.dtos.TransferDTO;
 
 public interface TransferUseCase {
     

@@ -3,7 +3,7 @@ package br.com.banco.presenter;
 import java.util.List;
 
 import br.com.banco.core.domain.TransferModel;
-import br.com.banco.core.domain.dto.TransferDTO;
+import br.com.banco.core.domain.dtos.TransferDTO;
 
 public interface TransferServices {
 
