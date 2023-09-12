@@ -1,12 +1,12 @@
 package br.com.banco.application.transfer;
 
-import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import br.com.banco.commun.LocalDateTimeToLong;
 import br.com.banco.core.domain.TransferModel;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -58,19 +58,19 @@ public class TransferRepositoryImpl implements TransferRepository  {
         
         if(initial > 0 && finals > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) < initial || item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) > finals) {
+                if (LocalDateTimeToLong.of(item.getTransferDate()) < initial || LocalDateTimeToLong.of(item.getTransferDate()) > finals) {
                     itemForDelete.add(item);
                 }
             }
         } else if(initial > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) < initial) {
+                if (LocalDateTimeToLong.of(item.getTransferDate()) < initial) {
                     itemForDelete.add(item);
                 }
             }
         } else if(finals > 0){
             for(TransferModel item : t) {
-                if (item.getTransferDate().getLong(ChronoField.NANO_OF_SECOND) > finals) {
+                if (LocalDateTimeToLong.of(item.getTransferDate()) > finals) {
                     itemForDelete.add(item);
                 }
             }
