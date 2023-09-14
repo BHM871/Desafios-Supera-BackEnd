@@ -13,6 +13,7 @@ import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.presenter.transfer.TransferServices;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 
+//Classe que implementa os casos de uso do Service das transferências
 @Service
 public class TransferServicesImpl implements TransferServices {
     
@@ -53,6 +54,8 @@ public class TransferServicesImpl implements TransferServices {
         throw new Exception("Filtros inválidos");
 
     }
+
+    //Buscas as transferencias de uma conta pelo ID
     @Override
     public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
         return this.transferUCase.getTransfersByIdAccount(account);

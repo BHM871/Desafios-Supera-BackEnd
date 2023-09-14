@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.AccountDTO;
 import br.com.banco.core.usecases.presenter.account.AccountController;
 import br.com.banco.core.usecases.presenter.account.AccountServices;
 
+//Classe que implementa os casos de uso do Controller das contas
 @RestController
 @RequestMapping("/account")
 public class AccountControllerImpl implements AccountController {
@@ -25,6 +25,7 @@ public class AccountControllerImpl implements AccountController {
     @Autowired
     AccountServices services;
 
+    //Cria uma nova conta e salva no banco de dados
     @Override
     @CrossOrigin
     @PostMapping("/create")
@@ -32,6 +33,7 @@ public class AccountControllerImpl implements AccountController {
         return ResponseEntity.status(HttpStatus.CREATED).body(services.create(account));
     }
 
+    //Método para buscar todas as contas
     @Override
     @CrossOrigin
     @GetMapping("/")
@@ -39,6 +41,7 @@ public class AccountControllerImpl implements AccountController {
         return ResponseEntity.status(HttpStatus.OK).body(services.findAll());
     }
 
+    //Método para buscar uma conta pelo ID
     @Override
     @CrossOrigin
     @GetMapping("/byId")

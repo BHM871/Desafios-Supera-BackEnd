@@ -9,6 +9,7 @@ import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 
+//Mapeia os casos de uso do Controller das transferências
 public interface TransferController {
 
     public ResponseEntity<Transfer> createTransfer(TransferDTO transfer)  throws Exception;

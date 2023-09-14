@@ -19,6 +19,7 @@ import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.presenter.transfer.TransferController;
 import br.com.banco.core.usecases.presenter.transfer.TransferServices;
 
+//Classe que implementa os casos de uso do Controller das transferências
 @RestController
 @RequestMapping("/transfer")
 public class TransferControllerImpl implements TransferController {
@@ -50,6 +51,7 @@ public class TransferControllerImpl implements TransferController {
         return ResponseEntity.status(HttpStatus.OK).body(services.findWithFilter(search));
     }
 
+    //Método para buscar as transferencias de uma conta pelo ID
     @Override
     @CrossOrigin
     @GetMapping("/byAccount")

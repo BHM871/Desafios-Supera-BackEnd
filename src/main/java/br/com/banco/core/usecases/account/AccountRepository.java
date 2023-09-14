@@ -5,6 +5,7 @@ import java.util.List;
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
 
+//Define os casos de uso do repositório das contas
 public interface AccountRepository {
     
     public void save(Account data);

@@ -7,6 +7,7 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 
+//Define os casos de uso da transferencia
 public interface TransferUseCase {
     
     public Transfer create(TransferDTO transfer) throws Exception;

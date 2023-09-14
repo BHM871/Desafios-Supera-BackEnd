@@ -14,19 +14,22 @@ import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
 
+//Classe que implementa os casos de uso do Repository das transferências
 @Repository
 public class TransferRepositoryImpl implements TransferRepository  {
 
     @Autowired
-    JpaTransferRepository repository;
+    JpaTransferRepository thisRepository;
     @Autowired
     JpaAccountRepository accountRepository;
 
+    //Salva uma transferência no bando de dados e retorna ela
     @Override
     public Transfer save(Transfer data){
-        return this.repository.save(data);
+        return thisRepository.save(data);
     }
 
+    //Cria uma transferência e salva
     @Override
     public Transfer createTransfer(TransferDTO transfer) throws Exception {
         validateTransfer(transfer);
@@ -43,39 +46,45 @@ public class TransferRepositoryImpl implements TransferRepository  {
         return newTransfer;
     }
 
+    //Busca todas as transferências
     @Override
     public List<Transfer> findAll() {
-        return this.repository.findAll();
+        return thisRepository.findAll();
     }
 
+    //Busca as transferências pelo nome do operador
     @Override
     public List<Transfer> findByOperatorName(String operatorName) {
-        return this.repository.findByOperatorName(operatorName);
+        return thisRepository.findByOperatorName(operatorName);
     }
     
+    //Busca as transferências pelo intervalo de tempo
     @Override
     public List<Transfer> findInInterval(LocalDateTime start, LocalDateTime end) {
         if(start == null) start = LocalDateTime.of(0, 0, 0, 0, 0);
         if(end == null) end = LocalDateTime.now();
 
-        return  this.repository.findByTransferDateBetween(start, end);
+        return  thisRepository.findByTransferDateBetween(start, end);
     }
 
+    //Busca as transferências pelo nome do operador e pelo intervalo de tempo
     @Override
     public List<Transfer> findByOperatorNameAndInterval(String operatorName, LocalDateTime start, LocalDateTime end) {
         if(start == null) start = LocalDateTime.of(0, 0, 0, 0, 0);
         if(end == null) end = LocalDateTime.now();
 
-        return this.repository.findByOperatorNameAndTransferDateBetween(operatorName, start, end);
+        return thisRepository.findByOperatorNameAndTransferDateBetween(operatorName, start, end);
     }
 
+    //Busca uma conta pelo ID depois busca as transferências dessa conta e retorna a lista de transferências
     @Override
     public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
         Account data = accountRepository.findById(account.getId()).orElseThrow();
         
-        return this.repository.findByAccount(data);
+        return thisRepository.findByAccount(data);
     }
 
+    //Método para validar os dados antes de criar uma transferência
     private void validateTransfer(TransferDTO t) throws Exception {
         String message = "Não foi possivel fazer a transferência, algum valor está incorreto";
 

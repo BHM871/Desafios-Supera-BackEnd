@@ -5,9 +5,9 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.AccountDTO;
 
+//Mapeia os casos de uso do Controller das contas
 public interface AccountController {
     
     public ResponseEntity<Account> createAccount(AccountDTO account) throws Exception;
