@@ -13,8 +13,6 @@ public interface TransferRepository {
 
     public Transfer createTransfer(TransferDTO transfer) throws Exception;
 
-    public Transfer findById(Long id) throws Exception;
-
     public List<Transfer> findAll();
 
     public List<Transfer> findByOperatorName(String operatorName);

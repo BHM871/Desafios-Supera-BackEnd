@@ -10,7 +10,6 @@ import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
-import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -41,14 +40,7 @@ public class TransferRepositoryImpl implements TransferRepository  {
         Long newTransferId = save(newTransfer).getId();
         newTransfer.setId(newTransferId);
 
-        accountRepository.save(account);
-
         return newTransfer;
-    }
-
-    @Override
-    public Transfer findById(Long id) throws Exception {
-        return this.repository.findById(id).orElseThrow();
     }
 
     @Override
@@ -86,6 +78,8 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
     private void validateTransfer(TransferDTO t) throws Exception {
         String message = "Não foi possivel fazer a transferência, algum valor está incorreto";
+
+        if(t.getOperatorName() != null && !t.getOperatorName().isEmpty()) accountRepository.findByNameResponsible(t.getOperatorName()).orElseThrow();
 
         if(t.gettValue() == null) throw new Exception(message);
 

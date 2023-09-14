@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 
 
 public interface JpaTransferRepository extends JpaRepository<Transfer, Long> {
-
-    public Optional<Transfer> findById(Long id);
     
     public List<Transfer> findByOperatorName(String operatorName);
 

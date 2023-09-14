@@ -10,4 +10,6 @@ public interface JpaAccountRepository extends JpaRepository<Account, Integer> {
     
     public Optional<Account> findById(Integer id);
 
+    public Optional<Account> findByNameResponsible(String nameResponsible);
+
 }
