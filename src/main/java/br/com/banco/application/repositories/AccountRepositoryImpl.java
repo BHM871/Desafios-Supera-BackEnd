@@ -48,7 +48,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Account findById(Integer id) throws Exception {
         return thisRepository.findById(id).orElseThrow();
     }
-    
+
     //Método para validar as informacoes para poder criar uma conta
     private void validateAccount(AccountDTO a) throws Exception {
         if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) throw new Exception("Nome está inválido");

@@ -52,7 +52,7 @@ public class Transfer implements Serializable {
 
     private String operatorName;
 
-    @ManyToOne(optional = true)
+    @ManyToOne(optional = true, cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = true)  
     private Account account;
 
