@@ -45,40 +45,26 @@ public class Account implements Serializable {
 
     private String nameResponsible;
 
-    @OneToMany()
-    private List<Transfer> transfers = new ArrayList<Transfer>();
-
-    public Account(Integer id, String nameResponsible, List<Transfer> transfers) {
+    public Account(Integer id, String nameResponsible) {
         this.id = id;
         this.nameResponsible = nameResponsible;
-        this.transfers = transfers;
     }
 
     public Account(AccountDTO data) {
         this.nameResponsible = data.getNameResponsible();
-        this.transfers = new ArrayList<Transfer>();
     }
 
     public Account() {
         this.id = null;
         this.nameResponsible = null;
-        this.transfers = new ArrayList<Transfer>();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
     public String getNameResponsible() {
         return nameResponsible;
-    }
-
-    public List<Transfer> getTransfers() {
-        return transfers;
-    }
-
-    public void setTransfers(List<Transfer> transfers) {
-        this.transfers = transfers;
     }
     
 }

@@ -8,6 +8,6 @@ import br.com.banco.core.domain.Account;
 
 public interface JpaAccountRepository extends JpaRepository<Account, Integer> {
     
-    public Optional<Account> findById(int id);
+    public Optional<Account> findById(Integer id);
 
 }

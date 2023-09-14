@@ -52,8 +52,8 @@ public class Transfer implements Serializable {
 
     private String operatorName;
 
-    @ManyToOne()
-    @JoinColumn(name = "account_id")  
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = true)  
     private Account account;
 
     public Transfer(
@@ -109,8 +109,11 @@ public class Transfer implements Serializable {
     }
 
     public Account getAccount() {
-        return account
-;
+        return account;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setTransferDate(LocalDateTime transferDate) {

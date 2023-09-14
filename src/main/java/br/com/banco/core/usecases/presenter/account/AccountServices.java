@@ -1,15 +1,14 @@
-package br.com.banco.core.usecases.account;
+package br.com.banco.core.usecases.presenter.account;
 
 import java.util.List;
 
 import br.com.banco.core.domain.Account;
+import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.AccountDTO;
 
-public interface AccountRepository {
+public interface AccountServices {
     
-    public void save(Account data);
-
-    public Account createAccount(AccountDTO account) throws Exception;
+    public Account create(AccountDTO account) throws Exception;
 
     public List<Account> findAll();
 

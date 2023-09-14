@@ -1,11 +1,13 @@
-package br.com.banco.application.transfer;
+package br.com.banco.application.usecases;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import br.com.banco.core.domain.Transfer;
+import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
@@ -18,7 +20,7 @@ public class TransferUseCaseImpl implements TransferUseCase {
 
     @Override
     public Transfer create(TransferDTO transfer) throws Exception {
-        return repository.createUser(transfer);
+        return repository.createTransfer(transfer);
     }
 
     @Override
@@ -32,13 +34,17 @@ public class TransferUseCaseImpl implements TransferUseCase {
     }
 
     @Override
-    public List<Transfer> getByInterval(long initial, long finals) {
-        return repository.findInInterval(initial, finals);
+    public List<Transfer> getByInterval(LocalDateTime start, LocalDateTime end) {
+        return repository.findInInterval(start, end);
     }
 
     @Override
-    public List<Transfer> getByOperatorNameAndInterval(String name, long initial, long finals) {
-        return repository.findByOperatorNameAndInterval(name, initial, finals);
+    public List<Transfer> getByOperatorNameAndInterval(String name, LocalDateTime start, LocalDateTime end) {
+        return repository.findByOperatorNameAndInterval(name, start, end);
+    }
+    @Override
+    public List<Transfer> getTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
+        return this.repository.findTransfersByIdAccount(account);
     }
     
 }

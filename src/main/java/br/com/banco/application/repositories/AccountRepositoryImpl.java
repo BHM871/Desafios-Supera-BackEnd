@@ -1,7 +1,7 @@
-package br.com.banco.application.account;
+package br.com.banco.application.repositories;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -10,13 +10,17 @@ import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.AccountDTO;
 import br.com.banco.core.usecases.account.AccountRepository;
+import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
+import br.com.banco.infra.jpa.JpaTransferRepository;
 
 @Repository
 public class AccountRepositoryImpl implements AccountRepository {
 
     @Autowired
     JpaAccountRepository repository;
+    @Autowired
+    JpaTransferRepository transferRepository;
 
     @Override
     public void save(Account data) {
@@ -35,20 +39,12 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     @Override
     public List<Account> findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        return this.repository.findAll();
     }
 
     @Override
-    public Optional<Account> findById(Integer Id) throws Exception {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findById'");
-    }
-
-    @Override
-    public List<Transfer> findTransfersByIdAccount(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findTransfersByIdAccount'");
+    public Account findById(Integer id) throws Exception {
+        return this.repository.findById(id).orElseThrow();
     }
     
     private void validateAccount(AccountDTO a) throws Exception {

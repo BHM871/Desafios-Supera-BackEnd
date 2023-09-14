@@ -1,4 +1,4 @@
-package br.com.banco.presenter.account;
+package br.com.banco.core.usecases.presenter.account;
 
 import java.util.List;
 
@@ -14,8 +14,6 @@ public interface AccountController {
 
     public ResponseEntity<List<Account>> getAll();
 
-    public ResponseEntity<Account> getById(Integer id) throws Exception;
-
-    public ResponseEntity<List<Transfer>> getTransfersByIdAccount(Integer id);
+    public ResponseEntity<Account> getById(AccountDTO id) throws Exception;
 
 }

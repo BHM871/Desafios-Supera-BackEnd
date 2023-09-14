@@ -1,10 +1,8 @@
 package br.com.banco.core.usecases.account;
 
 import java.util.List;
-import java.util.Optional;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.AccountDTO;
 
 public interface AccountUseCase {
@@ -13,8 +11,6 @@ public interface AccountUseCase {
 
     public List<Account> getAll();
 
-    public Optional<Account> getById(Integer Id) throws Exception;
-
-    public List<Transfer> getTransfersByIdAccount(Integer id);
+    public Account getById(Integer Id) throws Exception;
 
 }

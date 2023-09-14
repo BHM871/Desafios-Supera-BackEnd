@@ -4,9 +4,9 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public final class LocalDateTimeToLong {
+public final class LocalDateTimeConv {
     
-    public static long of(LocalDateTime localDateTime){
+    public static long toLong(LocalDateTime localDateTime){
         if(localDateTime == null) return 0;
         
         ZonedDateTime zdt = ZonedDateTime.of(localDateTime, ZoneId.systemDefault());
