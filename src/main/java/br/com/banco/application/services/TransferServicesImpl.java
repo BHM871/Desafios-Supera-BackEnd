@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.banco.commun.LocalDateTimeConv;
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
@@ -36,10 +35,8 @@ public class TransferServicesImpl implements TransferServices {
     @Override
     public List<Transfer> findWithFilter(FiltersDTO search) throws Exception {
         String name = search.getName();
-        long start = LocalDateTimeConv.toLong(search.getStart());
-        long end = LocalDateTimeConv.toLong(search.getEnd());
 
-        if(!name.isEmpty() && (start > 0 || end > 0)){
+        if(!name.isEmpty() && (search.getStart().getYear() > 0 || search.getEnd().getYear() > 0)){
             return transferUCase.getByOperatorNameAndInterval(name, search.getStart(), search.getEnd());
         }
         
@@ -47,7 +44,7 @@ public class TransferServicesImpl implements TransferServices {
             return transferUCase.getByOperatorName(name);
         } 
         
-        if(start > 0 || end > 0) {
+        if(search.getStart().getYear() > 0 || search.getEnd().getYear() > 0) {
             return transferUCase.getByInterval(search.getStart(), search.getEnd());
         }
 
