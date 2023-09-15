@@ -1,4 +1,4 @@
-package br.com.banco.core.exceptions;
+package br.com.banco.core.domain.exceptions;
 
 public class UserNotFoundException extends RuntimeException {
     

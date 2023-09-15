@@ -5,8 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import br.com.banco.core.exceptions.InvalidArgumentException;
-import br.com.banco.core.exceptions.UserNotFoundException;
+import br.com.banco.core.domain.exceptions.InvalidArgumentException;
+import br.com.banco.core.domain.exceptions.UserNotFoundException;
 import br.com.banco.core.usecases.exceptions.ExceptionManager;
 
 @RestControllerAdvice

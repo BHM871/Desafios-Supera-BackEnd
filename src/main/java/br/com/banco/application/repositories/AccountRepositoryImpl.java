@@ -7,8 +7,8 @@ import org.springframework.stereotype.Repository;
 
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
-import br.com.banco.core.exceptions.InvalidArgumentException;
-import br.com.banco.core.exceptions.UserNotFoundException;
+import br.com.banco.core.domain.exceptions.InvalidArgumentException;
+import br.com.banco.core.domain.exceptions.UserNotFoundException;
 import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;

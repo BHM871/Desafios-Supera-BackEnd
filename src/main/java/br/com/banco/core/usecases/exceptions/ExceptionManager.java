@@ -2,8 +2,8 @@ package br.com.banco.core.usecases.exceptions;
 
 import org.springframework.http.ResponseEntity;
 
-import br.com.banco.core.exceptions.InvalidArgumentException;
-import br.com.banco.core.exceptions.UserNotFoundException;
+import br.com.banco.core.domain.exceptions.InvalidArgumentException;
+import br.com.banco.core.domain.exceptions.UserNotFoundException;
 
 public interface ExceptionManager {
     
