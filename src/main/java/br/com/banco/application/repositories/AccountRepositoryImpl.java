@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
 import br.com.banco.core.exceptions.InvalidArgumentException;
+import br.com.banco.core.exceptions.UserNotFoundException;
 import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -23,8 +24,12 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     //Salva uma conta no banco de dados
     @Override
-    public void save(Account data) {
-        thisRepository.save(data);
+    public void save(Account data) throws Exception {
+        try{
+            thisRepository.save(data);
+        } catch(Exception e){
+            throw new InternalError("Não foi possivel salvar conta", e);
+        }
     }
 
     //Valida as informacoes passadas para criacao da conta, cria a conta e salva
@@ -38,7 +43,7 @@ public class AccountRepositoryImpl implements AccountRepository {
             save(newAccount);
             return newAccount;
         } catch(Exception e){
-            throw new InternalError("Não possivel criar uma conta", e);
+            throw new InternalError("Não foi possivel criar a conta", e);
         }
         
     }
@@ -52,12 +57,14 @@ public class AccountRepositoryImpl implements AccountRepository {
     //Busca as contas pelo ID
     @Override
     public Account findById(Integer id) throws Exception {
-        return thisRepository.findById(id).orElseThrow();
+        return thisRepository.findById(id).orElseThrow(() -> new UserNotFoundException());
     }
 
     //Método para validar as informacoes para poder criar uma conta
     private void validateAccount(AccountDTO a) throws Exception {
-        if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) throw new InvalidArgumentException("Nome está inválido");
+        if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) {
+            throw new InvalidArgumentException("Nome tem um valor inválido");
+        }
     }
 
 }

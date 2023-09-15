@@ -10,7 +10,7 @@ import br.com.banco.core.domain.dtos.TransferDTO;
 //Define os casos de uso do repositório das transferências
 public interface TransferRepository {
 
-    public Transfer save(Transfer transfer);
+    public Transfer save(Transfer transfer) throws Exception;
 
     public Transfer createTransfer(TransferDTO transfer) throws Exception;
 

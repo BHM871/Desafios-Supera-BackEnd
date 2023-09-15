@@ -11,6 +11,7 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.exceptions.InvalidArgumentException;
+import br.com.banco.core.exceptions.UserNotFoundException;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -26,8 +27,12 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
     //Salva uma transferência no bando de dados e retorna ela
     @Override
-    public Transfer save(Transfer data){
-        return thisRepository.save(data);
+    public Transfer save(Transfer data) throws Exception{
+        try{
+            return thisRepository.save(data);
+        } catch(Exception e){
+            throw new InternalError("Não foi possivel salvar a transferência", e);
+        }
     }
 
     //Cria uma transferência e salva
@@ -37,7 +42,7 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
         try{
             Transfer newTransfer = new Transfer(transfer);
-            Account account = accountRepository.findById(transfer.getAccountId()).orElseThrow();
+            Account account = accountRepository.findById(transfer.getAccountId()).orElseThrow(() -> new UserNotFoundException());
 
             newTransfer.setTransferDate(LocalDateTime.now());
             newTransfer.setAccount(account);
@@ -46,7 +51,9 @@ public class TransferRepositoryImpl implements TransferRepository  {
             newTransfer.setId(newTransferId);
 
             return newTransfer;
-        } catch(Exception e){
+        } catch(UserNotFoundException e){
+            throw e;
+        }catch(Exception e){
             throw new InternalError("Não foi possivel fazer a transferencia", e);
         }
         
@@ -85,17 +92,22 @@ public class TransferRepositoryImpl implements TransferRepository  {
     //Busca uma conta pelo ID depois busca as transferências dessa conta e retorna a lista de transferências
     @Override
     public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
-        Account data = accountRepository.findById(account.getId()).orElseThrow();
+        Account data = accountRepository.findById(account.getId()).orElseThrow(() -> new UserNotFoundException());
         
         return thisRepository.findByAccount(data);
     }
 
     //Método para validar os dados antes de criar uma transferência
     private void validateTransfer(TransferDTO t) throws Exception {
-        String message = "Não foi possivel fazer a transferência, algum valor está incorreto";
+        String message = "Não foi possivel fazer a transferência, algum valor está vazio";
 
-        if(t.getOperatorName() != null && !t.getOperatorName().isEmpty()) accountRepository.findByNameResponsible(t.getOperatorName()).orElseThrow();
-
+        if(t.getOperatorName() != null && !t.getOperatorName().isEmpty()){
+            accountRepository.findByNameResponsible(t.getOperatorName())
+                .orElseThrow(
+                    () -> new UserNotFoundException("Conta de destino não encontrada")
+                );
+        }
+            
         if(t.gettValue() == null) throw new InvalidArgumentException(message);
 
         if(t.gettType() == null) throw new InvalidArgumentException(message);
