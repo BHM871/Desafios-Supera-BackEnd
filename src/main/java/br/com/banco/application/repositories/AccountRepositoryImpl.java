@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.exceptions.InvalidArgumentException;
 import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -31,10 +32,15 @@ public class AccountRepositoryImpl implements AccountRepository {
     public Account createAccount(AccountDTO account) throws Exception {
         validateAccount(account);
 
-        Account newAccount = new Account(account);
+        try{
+            Account newAccount = new Account(account);
 
-        save(newAccount);
-        return newAccount;
+            save(newAccount);
+            return newAccount;
+        } catch(Exception e){
+            throw new InternalError("Não possivel criar uma conta", e);
+        }
+        
     }
 
     //Busca todas as contas salvas
@@ -51,7 +57,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     //Método para validar as informacoes para poder criar uma conta
     private void validateAccount(AccountDTO a) throws Exception {
-        if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) throw new Exception("Nome está inválido");
+        if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) throw new InvalidArgumentException("Nome está inválido");
     }
 
 }

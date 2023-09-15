@@ -10,6 +10,7 @@ import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
+import br.com.banco.core.exceptions.InvalidArgumentException;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.infra.jpa.JpaAccountRepository;
 import br.com.banco.infra.jpa.JpaTransferRepository;
@@ -34,16 +35,21 @@ public class TransferRepositoryImpl implements TransferRepository  {
     public Transfer createTransfer(TransferDTO transfer) throws Exception {
         validateTransfer(transfer);
 
-        Transfer newTransfer = new Transfer(transfer);
-        Account account = accountRepository.findById(transfer.getAccountId()).orElseThrow();
+        try{
+            Transfer newTransfer = new Transfer(transfer);
+            Account account = accountRepository.findById(transfer.getAccountId()).orElseThrow();
 
-        newTransfer.setTransferDate(LocalDateTime.now());
-        newTransfer.setAccount(account);
+            newTransfer.setTransferDate(LocalDateTime.now());
+            newTransfer.setAccount(account);
+            
+            Long newTransferId = save(newTransfer).getId();
+            newTransfer.setId(newTransferId);
+
+            return newTransfer;
+        } catch(Exception e){
+            throw new InternalError("Não foi possivel fazer a transferencia", e);
+        }
         
-        Long newTransferId = save(newTransfer).getId();
-        newTransfer.setId(newTransferId);
-
-        return newTransfer;
     }
 
     //Busca todas as transferências
@@ -90,11 +96,11 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
         if(t.getOperatorName() != null && !t.getOperatorName().isEmpty()) accountRepository.findByNameResponsible(t.getOperatorName()).orElseThrow();
 
-        if(t.gettValue() == null) throw new Exception(message);
+        if(t.gettValue() == null) throw new InvalidArgumentException(message);
 
-        if(t.gettType() == null) throw new Exception(message);
+        if(t.gettType() == null) throw new InvalidArgumentException(message);
 
-        if(t.getAccountId() == null) throw new Exception(message);
+        if(t.getAccountId() == null) throw new InvalidArgumentException(message);
 
     }
 

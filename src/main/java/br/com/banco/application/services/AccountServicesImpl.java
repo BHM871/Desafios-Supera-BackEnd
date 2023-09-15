@@ -7,32 +7,32 @@ import org.springframework.stereotype.Service;
 
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.core.usecases.account.AccountUseCase;
-import br.com.banco.core.usecases.presenter.account.AccountServices;
 
 //Classe que implementa os casos de uso do Service das contas
 @Service
-public class AccountServicesImpl implements AccountServices {
+public class AccountServicesImpl implements AccountUseCase {
 
     @Autowired
-    AccountUseCase accountUCase;
+    AccountRepository repository;
 
     //Cira uma conta
     @Override
     public Account create(AccountDTO account) throws Exception {
-        return accountUCase.create(account);
+        return repository.createAccount(account);
     }
 
     //Busca todas as contas
     @Override
     public List<Account> findAll() {
-        return this.accountUCase.getAll();
+        return this.repository.findAll();
     }
 
     //Busca uma conta pelo ID
     @Override
     public Account findById(Integer id) throws Exception {
-        return this.accountUCase.getById(id);
+        return this.repository.findById(id);
     }
     
 }

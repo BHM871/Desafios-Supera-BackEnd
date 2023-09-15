@@ -9,26 +9,26 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
-import br.com.banco.core.usecases.presenter.transfer.TransferServices;
+import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 
 //Classe que implementa os casos de uso do Service das transferências
 @Service
-public class TransferServicesImpl implements TransferServices {
+public class TransferServicesImpl implements TransferUseCase {
     
     @Autowired
-    TransferUseCase transferUCase;
+    TransferRepository repository;
 
     //Cria uma transferencia
     @Override
     public Transfer create(TransferDTO transfer) throws Exception {
-        return transferUCase.create(transfer);
+        return repository.createTransfer(transfer);
     }
 
     //Busca todas as tranferências
     @Override
     public List<Transfer> findAll(){
-        return transferUCase.getAll();
+        return repository.findAll();
     }
 
     //Busca as tranferências baseados nos filtros disponíveis, por fim retorna a lista filtrada
@@ -37,15 +37,15 @@ public class TransferServicesImpl implements TransferServices {
         String name = search.getName();
 
         if(!name.isEmpty() && (search.getStart().getYear() > 0 || search.getEnd().getYear() > 0)){
-            return transferUCase.getByOperatorNameAndInterval(name, search.getStart(), search.getEnd());
+            return repository.findByOperatorNameAndInterval(name, search.getStart(), search.getEnd());
         }
         
         if (!name.isEmpty()){
-            return transferUCase.getByOperatorName(name);
+            return repository.findByOperatorName(name);
         } 
         
         if(search.getStart().getYear() > 0 || search.getEnd().getYear() > 0) {
-            return transferUCase.getByInterval(search.getStart(), search.getEnd());
+            return repository.findInInterval(search.getStart(), search.getEnd());
         }
 
         throw new Exception("Filtros inválidos");
@@ -55,7 +55,7 @@ public class TransferServicesImpl implements TransferServices {
     //Buscas as transferencias de uma conta pelo ID
     @Override
     public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
-        return this.transferUCase.getTransfersByIdAccount(account);
+        return this.repository.findTransfersByIdAccount(account);
     }
 
 }

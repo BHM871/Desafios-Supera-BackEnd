@@ -1,4 +1,4 @@
-package br.com.banco.core.usecases.presenter.account;
+package br.com.banco.core.usecases.account;
 
 import java.util.List;
 

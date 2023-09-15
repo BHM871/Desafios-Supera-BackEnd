@@ -16,8 +16,8 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
-import br.com.banco.core.usecases.presenter.transfer.TransferController;
-import br.com.banco.core.usecases.presenter.transfer.TransferServices;
+import br.com.banco.core.usecases.transfers.TransferController;
+import br.com.banco.core.usecases.transfers.TransferUseCase;
 
 //Classe que implementa os casos de uso do Controller das transferências
 @RestController
@@ -25,7 +25,7 @@ import br.com.banco.core.usecases.presenter.transfer.TransferServices;
 public class TransferControllerImpl implements TransferController {
     
     @Autowired()
-    TransferServices services;
+    TransferUseCase services;
 
     //Criar novas transferencias
     @Override

@@ -1,4 +1,4 @@
-package br.com.banco.core.usecases.presenter.transfer;
+package br.com.banco.core.usecases.transfers;
 
 import java.util.List;
 
