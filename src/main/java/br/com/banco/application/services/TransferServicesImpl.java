@@ -9,6 +9,7 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
+import br.com.banco.core.domain.exceptions.InvalidArgumentException;
 import br.com.banco.core.usecases.transfers.TransferRepository;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 
@@ -48,7 +49,7 @@ public class TransferServicesImpl implements TransferUseCase {
             return repository.findInInterval(search.getStart(), search.getEnd());
         }
 
-        throw new Exception("Filtros inválidos");
+        throw new InvalidArgumentException("Filtros inválidos");
 
     }
 

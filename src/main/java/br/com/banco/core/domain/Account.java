@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
-import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.domain.dtos.NewAccountDTO;
 import lombok.*;
 
 @Entity
@@ -23,7 +23,7 @@ public class Account implements Serializable {
 
     private String nameResponsible;
 
-    public Account(AccountDTO data) {
+    public Account(NewAccountDTO data) {
         this.nameResponsible = data.getNameResponsible();
     }
     

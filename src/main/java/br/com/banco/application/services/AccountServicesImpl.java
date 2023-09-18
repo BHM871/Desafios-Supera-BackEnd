@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.domain.dtos.NewAccountDTO;
 import br.com.banco.core.usecases.account.AccountRepository;
 import br.com.banco.core.usecases.account.AccountUseCase;
 
@@ -19,7 +19,7 @@ public class AccountServicesImpl implements AccountUseCase {
 
     //Cira uma conta
     @Override
-    public Account create(AccountDTO account) throws Exception {
+    public Account create(NewAccountDTO account) throws Exception {
         return repository.createAccount(account);
     }
 

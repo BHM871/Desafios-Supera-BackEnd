@@ -4,9 +4,8 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
-public class AccountDTO {
+public class NewAccountDTO {
 
-    private final Integer id;
     private final String nameResponsible;
     
 }

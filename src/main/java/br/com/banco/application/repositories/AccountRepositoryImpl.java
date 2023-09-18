@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.domain.dtos.NewAccountDTO;
 import br.com.banco.core.domain.exceptions.InvalidArgumentException;
 import br.com.banco.core.domain.exceptions.UserNotFoundException;
 import br.com.banco.core.usecases.account.AccountRepository;
@@ -34,7 +34,7 @@ public class AccountRepositoryImpl implements AccountRepository {
 
     //Valida as informacoes passadas para criacao da conta, cria a conta e salva
     @Override
-    public Account createAccount(AccountDTO account) throws Exception {
+    public Account createAccount(NewAccountDTO account) throws Exception {
         validateAccount(account);
 
         try{
@@ -61,7 +61,7 @@ public class AccountRepositoryImpl implements AccountRepository {
     }
 
     //Método para validar as informacoes para poder criar uma conta
-    private void validateAccount(AccountDTO a) throws Exception {
+    private void validateAccount(NewAccountDTO a) throws Exception {
         if(a.getNameResponsible() == null || a.getNameResponsible().isEmpty()) {
             throw new InvalidArgumentException("Nome tem um valor inválido");
         }

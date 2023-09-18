@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.dtos.AccountDTO;
+import br.com.banco.core.domain.dtos.GetByIdAccountDTO;
+import br.com.banco.core.domain.dtos.NewAccountDTO;
 import br.com.banco.core.usecases.account.AccountController;
 import br.com.banco.core.usecases.account.AccountUseCase;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +41,7 @@ public class AccountControllerImpl implements AccountController {
         @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
     })
-    public ResponseEntity<Account> createAccount(@RequestBody AccountDTO account)  throws Exception {
+    public ResponseEntity<Account> createAccount(@RequestBody NewAccountDTO account)  throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(services.create(account));
     }
 
@@ -65,7 +66,7 @@ public class AccountControllerImpl implements AccountController {
         @ApiResponse(responseCode = "200", description = "Returns a account"),
         @ApiResponse(responseCode = "422", description = "ID not represent a account ID")
     })
-    public ResponseEntity<Account> getById(@RequestBody AccountDTO account) throws Exception {
+    public ResponseEntity<Account> getById(@RequestBody GetByIdAccountDTO account) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findById(account.getId()));
     }
 
