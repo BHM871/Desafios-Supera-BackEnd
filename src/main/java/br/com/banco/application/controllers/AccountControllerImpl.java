@@ -50,9 +50,7 @@ public class AccountControllerImpl implements AccountController {
     @GetMapping("/")
     @Operation(summary = "Get all accounts")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Returns all accounts"),
-        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
+        @ApiResponse(responseCode = "200", description = "Returns a list of accountsa or a empty list")
     })
     public ResponseEntity<List<Account>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(services.findAll());
@@ -65,8 +63,7 @@ public class AccountControllerImpl implements AccountController {
     @Operation(summary = "Get a account with ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Returns a account"),
-        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
+        @ApiResponse(responseCode = "422", description = "ID not represent a account ID")
     })
     public ResponseEntity<Account> getById(@RequestBody AccountDTO account) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findById(account.getId()));
