@@ -16,10 +16,15 @@ import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.dtos.AccountDTO;
 import br.com.banco.core.usecases.account.AccountController;
 import br.com.banco.core.usecases.account.AccountUseCase;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 //Classe que implementa os casos de uso do Controller das contas
 @RestController
-@RequestMapping("/account")
+@RequestMapping(value = "/account", produces = {"application/json"})
+@Tag(name = "Account")
 public class AccountControllerImpl implements AccountController {
 
     @Autowired
@@ -29,6 +34,12 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @CrossOrigin
     @PostMapping("/create")
+    @Operation(summary = "Create a new account")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Returns a new account"),
+        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<Account> createAccount(@RequestBody AccountDTO account)  throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(services.create(account));
     }
@@ -37,6 +48,12 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @CrossOrigin
     @GetMapping("/")
+    @Operation(summary = "Get all accounts")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Returns all accounts"),
+        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<List<Account>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(services.findAll());
     }
@@ -45,6 +62,12 @@ public class AccountControllerImpl implements AccountController {
     @Override
     @CrossOrigin
     @GetMapping("/byId")
+    @Operation(summary = "Get a account with ID")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Returns a account"),
+        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
+        @ApiResponse(responseCode = "500", description = "Internal server error")
+    })
     public ResponseEntity<Account> getById(@RequestBody AccountDTO account) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findById(account.getId()));
     }
