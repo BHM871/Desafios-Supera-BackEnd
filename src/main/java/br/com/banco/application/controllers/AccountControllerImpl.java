@@ -50,7 +50,7 @@ public class AccountControllerImpl implements AccountController {
     @GetMapping("/")
     @Operation(summary = "Get all accounts")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Returns a list of accountsa or a empty list")
+        @ApiResponse(responseCode = "200", description = "Returns a list of account or a empty list")
     })
     public ResponseEntity<List<Account>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(services.findAll());
