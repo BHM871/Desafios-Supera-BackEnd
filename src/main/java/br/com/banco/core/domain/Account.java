@@ -5,9 +5,14 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import br.com.banco.core.domain.dtos.AccountDTO;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_ACCOUNT")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Account implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -18,26 +23,8 @@ public class Account implements Serializable {
 
     private String nameResponsible;
 
-    public Account(Integer id, String nameResponsible) {
-        this.id = id;
-        this.nameResponsible = nameResponsible;
-    }
-
     public Account(AccountDTO data) {
         this.nameResponsible = data.getNameResponsible();
-    }
-
-    public Account() {
-        this.id = null;
-        this.nameResponsible = null;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public String getNameResponsible() {
-        return nameResponsible;
     }
     
 }

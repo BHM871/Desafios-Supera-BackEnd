@@ -108,9 +108,9 @@ public class TransferRepositoryImpl implements TransferRepository  {
                 );
         }
             
-        if(t.gettValue() == null) throw new InvalidArgumentException(message);
+        if(t.getTValue() == null) throw new InvalidArgumentException(message);
 
-        if(t.gettType() == null) throw new InvalidArgumentException(message);
+        if(t.getTType() == null) throw new InvalidArgumentException(message);
 
         if(t.getAccountId() == null) throw new InvalidArgumentException(message);
 

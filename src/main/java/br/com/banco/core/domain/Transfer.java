@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import javax.persistence.*;
 
 import br.com.banco.core.domain.dtos.TransferDTO;
+import lombok.*;
 
 /*
 Para a crição do model segui e acordo com o arquivo de database disponibilizado.
@@ -35,6 +36,10 @@ Pois este projeto não como objetivo mudar nenhum valor, apenas ler
 
 @Entity
 @Table(name = "TB_TRANSFER")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Transfer implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -56,84 +61,10 @@ public class Transfer implements Serializable {
     @JoinColumn(name = "account_id", referencedColumnName = "id", nullable = true)  
     private Account account;
 
-    public Transfer(
-            Long id, 
-            LocalDateTime transferDate, 
-            BigDecimal tValue, 
-            TransferType tType,
-            String operatorName, 
-            Account account
-    
-    ) {
-        this.id = id;
-        this.transferDate = transferDate;
-        this.tValue = tValue;
-        this.tType = tType;
-        this.operatorName = operatorName;
-        this.account = account;
-    }
-
     public Transfer(TransferDTO data) {
-        this.tValue = data.gettValue();
-        this.tType = data.gettType();
+        this.tValue = data.getTValue();
+        this.tType = data.getTType();
         this.operatorName = data.getOperatorName();
-    }
-
-    public Transfer() {
-        this.id = null;
-        this.transferDate = null;
-        this.tValue = null;
-        this.tType = null;
-        this.operatorName = null;
-        this.account = null;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public LocalDateTime getTransferDate() {
-        return transferDate;
-    }
-
-    public BigDecimal getValue() {
-        return tValue;
-    }
-
-    public TransferType getType() {
-        return tType;
-    }
-
-    public String getOperatorName() {
-        return operatorName;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setTransferDate(LocalDateTime transferDate) {
-        this.transferDate = transferDate;
-    }
-
-    public void setValue(BigDecimal tValue) {
-        this.tValue = tValue;
-    }
-
-    public void setType(TransferType tType){
-        this.tType = tType;
-    }
-
-    public void setOperatorName(String operatorName){
-        this.operatorName = operatorName;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
 }
