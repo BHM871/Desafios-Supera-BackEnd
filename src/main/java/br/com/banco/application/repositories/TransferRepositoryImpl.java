@@ -2,13 +2,13 @@ package br.com.banco.application.repositories;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.com.banco.core.domain.Account;
 import br.com.banco.core.domain.Transfer;
-import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.domain.exceptions.InvalidArgumentException;
 import br.com.banco.core.domain.exceptions.UserNotFoundException;
@@ -91,10 +91,12 @@ public class TransferRepositoryImpl implements TransferRepository  {
 
     //Busca uma conta pelo ID depois busca as transferências dessa conta e retorna a lista de transferências
     @Override
-    public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
-        Account data = accountRepository.findById(account.getId()).orElseThrow(() -> new UserNotFoundException());
+    public List<Transfer> findTransfersByIdAccount(int id) throws Exception {
+        Optional<Account> data = accountRepository.findById(id);
         
-        return thisRepository.findByAccount(data);
+        if(!data.isPresent()) throw new UserNotFoundException();
+        
+        return thisRepository.findByAccount(data.get());
     }
 
     //Método para validar os dados antes de criar uma transferência

@@ -10,16 +10,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
-import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.domain.exceptions.ExceptionBody;
+import br.com.banco.core.domain.exceptions.InvalidArgumentException;
+import br.com.banco.core.domain.exceptions.UserNotFoundException;
+import br.com.banco.core.usecases.exceptions.ExceptionManager;
 import br.com.banco.core.usecases.transfers.TransferController;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -32,8 +36,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Transfer")
 public class TransferControllerImpl implements TransferController {
     
-    @Autowired()
+    @Autowired
     TransferUseCase services;
+    @Autowired
+    ExceptionManager exceptionManager;
 
     //Criar novas transferencias
     @Override
@@ -42,7 +48,7 @@ public class TransferControllerImpl implements TransferController {
     @Operation(summary = "Create a new transfer")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Returns a new transfer"),
-        @ApiResponse(responseCode = "400", description = "Source account or target account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
+        @ApiResponse(responseCode = "404", description = "Source account or target account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
         @ApiResponse(responseCode = "422", description = "Invalid Arguments", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
         @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
@@ -69,7 +75,8 @@ public class TransferControllerImpl implements TransferController {
     @Operation(summary = "Get transfers with filters", description = "RequestBody is required, but, all values of json not")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Returns a list of transfer or a empty list"),
-        @ApiResponse(responseCode = "422", description = "All value are null", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
+        @ApiResponse(responseCode = "422", description = "All value are null", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
     public ResponseEntity<List<Transfer>> getWithFilter(@RequestBody FiltersDTO search) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findWithFilter(search));
@@ -78,14 +85,15 @@ public class TransferControllerImpl implements TransferController {
     //Método para buscar as transferencias de uma conta pelo ID
     @Override
     @CrossOrigin
-    @GetMapping("/byAccount")
-    @Operation(summary = "Get transfers with account ID")
+    @GetMapping("/byAccount{id}")
+    @Operation(summary = "Get transfers with account ID", parameters = @Parameter(name = "id", required = true))
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Returns a list of transfer from a account ID or a empty list"),
-        @ApiResponse(responseCode = "400", description = "Account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
+        @ApiResponse(responseCode = "404", description = "Account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
+        @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
-    public ResponseEntity<List<Transfer>> getTransfersByIdAccount(@RequestBody TransferByAccountDTO account) throws Exception {
-        return ResponseEntity.status(HttpStatus.OK).body(services.findTransfersByIdAccount(account));
+    public ResponseEntity<List<Transfer>> getTransfersByIdAccount(@RequestParam(name = "id", required = true) int id) throws Exception {
+        return ResponseEntity.status(HttpStatus.OK).body(services.findTransfersByIdAccount(id));
     }
     
 }

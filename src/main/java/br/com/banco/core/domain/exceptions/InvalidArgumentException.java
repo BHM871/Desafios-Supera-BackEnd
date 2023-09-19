@@ -2,7 +2,9 @@ package br.com.banco.core.domain.exceptions;
 
 public class InvalidArgumentException extends RuntimeException {
     
-    public InvalidArgumentException(){super();}
+    private static String m = "Invalid Arguments";
+
+    public InvalidArgumentException(){super(m);}
 
     public InvalidArgumentException(String message){super(message);}
 

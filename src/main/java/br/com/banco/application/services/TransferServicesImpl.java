@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
-import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 import br.com.banco.core.domain.exceptions.InvalidArgumentException;
 import br.com.banco.core.usecases.transfers.TransferRepository;
@@ -37,7 +36,9 @@ public class TransferServicesImpl implements TransferUseCase {
     public List<Transfer> findWithFilter(FiltersDTO search) throws Exception {
         String name = search.getName();
 
-        if(!name.isEmpty() && (search.getStart().getYear() > 0 || search.getEnd().getYear() > 0)){
+        if(
+            !name.isEmpty() && search.getStart() != null || search.getEnd() != null
+        ){
             return repository.findByOperatorNameAndInterval(name, search.getStart(), search.getEnd());
         }
         
@@ -45,7 +46,7 @@ public class TransferServicesImpl implements TransferUseCase {
             return repository.findByOperatorName(name);
         } 
         
-        if(search.getStart().getYear() > 0 || search.getEnd().getYear() > 0) {
+        if(search.getStart() != null || search.getEnd() != null) {
             return repository.findInInterval(search.getStart(), search.getEnd());
         }
 
@@ -55,8 +56,8 @@ public class TransferServicesImpl implements TransferUseCase {
 
     //Buscas as transferencias de uma conta pelo ID
     @Override
-    public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO account) throws Exception {
-        return this.repository.findTransfersByIdAccount(account);
+    public List<Transfer> findTransfersByIdAccount(int id) throws Exception {
+        return this.repository.findTransfersByIdAccount(id);
     }
 
 }

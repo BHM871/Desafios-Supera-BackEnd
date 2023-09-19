@@ -4,7 +4,8 @@ package br.com.banco.core.domain.dtos;
 import java.math.BigDecimal;
 
 import br.com.banco.core.domain.TransferType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor

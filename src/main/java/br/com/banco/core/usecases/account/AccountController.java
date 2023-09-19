@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 
 import br.com.banco.core.domain.Account;
-import br.com.banco.core.domain.dtos.GetByIdAccountDTO;
 import br.com.banco.core.domain.dtos.NewAccountDTO;
 
 //Mapeia os casos de uso do Controller das contas
@@ -15,6 +14,6 @@ public interface AccountController {
 
     public ResponseEntity<List<Account>> getAll();
 
-    public ResponseEntity<Account> getById(GetByIdAccountDTO id) throws Exception;
+    public ResponseEntity<Account> getById(int id) throws Exception;
 
 }

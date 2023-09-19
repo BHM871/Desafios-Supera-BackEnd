@@ -1,6 +1,7 @@
 package br.com.banco.core.domain.dtos;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor

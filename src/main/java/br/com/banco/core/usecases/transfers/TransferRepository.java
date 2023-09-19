@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import br.com.banco.core.domain.Transfer;
-import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
 
 //Define os casos de uso do repositório das transferências
@@ -22,6 +21,6 @@ public interface TransferRepository {
 
     public List<Transfer> findByOperatorNameAndInterval(String operatorName, LocalDateTime start, LocalDateTime end);
     
-    public List<Transfer> findTransfersByIdAccount(TransferByAccountDTO id) throws Exception;
+    public List<Transfer> findTransfersByIdAccount(int id) throws Exception;
     
 }

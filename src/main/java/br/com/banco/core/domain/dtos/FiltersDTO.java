@@ -1,7 +1,9 @@
 package br.com.banco.core.domain.dtos;
 
 import java.time.LocalDateTime;
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
