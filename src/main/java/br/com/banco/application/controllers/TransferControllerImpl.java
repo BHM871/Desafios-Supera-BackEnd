@@ -16,9 +16,12 @@ import br.com.banco.core.domain.Transfer;
 import br.com.banco.core.domain.dtos.FiltersDTO;
 import br.com.banco.core.domain.dtos.TransferByAccountDTO;
 import br.com.banco.core.domain.dtos.TransferDTO;
+import br.com.banco.core.domain.exceptions.ExceptionBody;
 import br.com.banco.core.usecases.transfers.TransferController;
 import br.com.banco.core.usecases.transfers.TransferUseCase;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -38,10 +41,10 @@ public class TransferControllerImpl implements TransferController {
     @PostMapping("/create")
     @Operation(summary = "Create a new transfer")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Returns a new transfer"),
-        @ApiResponse(responseCode = "400", description = "Source account or target account not found"),
-        @ApiResponse(responseCode = "422", description = "Invalid Arguments"),
-        @ApiResponse(responseCode = "500", description = "Internal server error")
+        @ApiResponse(responseCode = "201", description = "Returns a new transfer"),
+        @ApiResponse(responseCode = "400", description = "Source account or target account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
+        @ApiResponse(responseCode = "422", description = "Invalid Arguments", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class))),
+        @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
     public ResponseEntity<Transfer> createTransfer(@RequestBody TransferDTO transfer)  throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(services.create(transfer));
@@ -66,7 +69,7 @@ public class TransferControllerImpl implements TransferController {
     @Operation(summary = "Get transfers with filters", description = "RequestBody is required, but, all values of json not")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Returns a list of transfer or a empty list"),
-        @ApiResponse(responseCode = "422", description = "All value are null")
+        @ApiResponse(responseCode = "422", description = "All value are null", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
     public ResponseEntity<List<Transfer>> getWithFilter(@RequestBody FiltersDTO search) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findWithFilter(search));
@@ -79,7 +82,7 @@ public class TransferControllerImpl implements TransferController {
     @Operation(summary = "Get transfers with account ID")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "Returns a list of transfer from a account ID or a empty list"),
-        @ApiResponse(responseCode = "400", description = "Account not found")
+        @ApiResponse(responseCode = "400", description = "Account not found", content = @Content(schema = @Schema(type = "object", implementation = ExceptionBody.class)))
     })
     public ResponseEntity<List<Transfer>> getTransfersByIdAccount(@RequestBody TransferByAccountDTO account) throws Exception {
         return ResponseEntity.status(HttpStatus.OK).body(services.findTransfersByIdAccount(account));

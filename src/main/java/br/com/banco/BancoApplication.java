@@ -12,7 +12,7 @@ import io.swagger.v3.oas.annotations.info.Info;
     title = "Search Transfer API", 
     version = "1", 
     description = "Simple API for manage transfers",
-    contact = @Contact(name = "Adrian Almeida", email = "adrianalmeida@gmail.com")
+    contact = @Contact(name = "Adrian Almeida - BHM Code", email = "adrianalmeida@gmail.com")
     )
 )
 public class BancoApplication {
